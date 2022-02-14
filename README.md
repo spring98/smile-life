@@ -1,6 +1,6 @@
-# smile_life
+# firebase unit
 
-A new Flutter project.
+master branch : 플러터-파이어베이스 유닛 코드 작성
 
 ## Getting Started
 
