@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'kColor.dart';
 
-BoxDecoration kButtonUnderLine() {
+BoxDecoration kButtonUnderLine({Color color = Colors.black, double width = 1}) {
   return BoxDecoration(
     border: Border(
-      bottom: BorderSide(color: Colors.black),
+      bottom: BorderSide(color: color, width: width),
     ),
   );
 }

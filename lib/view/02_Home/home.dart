@@ -1,16 +1,18 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_function_declarations_over_variables, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:smile_life/core/view_model/home/home_view_model.dart';
+import 'package:smile_life/utils/constants/kButton.dart';
 import 'package:smile_life/utils/constants/kColor.dart';
 import 'package:smile_life/utils/constants/kFonts.dart';
 import 'package:smile_life/utils/constants/kAlert.dart';
 import 'package:smile_life/utils/constants/kAppBar.dart';
-import 'package:smile_life/view/02_Home/01_Create/01_create.dart';
-import 'package:smile_life/view/02_Home/02_Read/01_read.dart';
-import 'package:smile_life/view/02_Home/03_Update/01_update.dart';
-import 'package:smile_life/view/02_Home/04_Delete/01_delete.dart';
+import 'package:smile_life/utils/enum/home_enum.dart';
+import 'package:smile_life/view/02_Home/01_all_store/all_store_view.dart';
+import 'package:smile_life/view/02_Home/02_my_store/my_store_view.dart';
+import 'package:smile_life/view/02_Home/04_Crud/crud.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -22,6 +24,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   // final dashViewModel = Get.put(DashViewModel());
 
+  final homeViewModel = Get.put(HomeViewModel());
+
   @override
   void initState() {
     super.initState();
@@ -32,169 +36,141 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        onBackPressed(context);
+        alertBackPressed();
         return Future(() => false);
       },
       child: Scaffold(
         appBar: kAppBarHome('Home'),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [_homeView()],
+          ),
+        ),
+        floatingActionButton: _floatingButton(),
+        bottomNavigationBar: _bottomNavigationBar(),
+      ),
+    );
+  }
+
+  Widget _homeView() {
+    return GetBuilder<HomeViewModel>(
+      builder: (_) {
+        return Column(
           children: [
-            SizedBox(height: 20.h),
-            _fourButton(),
+            if (_.bottomNavigation == BottomNavigation.allStore) ...[
+              AllStore(),
+            ] else if (_.bottomNavigation == BottomNavigation.myStore) ...[
+              MyStore(),
+            ] else
+              ...[],
           ],
-        ),
-        bottomNavigationBar: Container(
-          alignment: Alignment.center,
-          height: 50.h,
-          child: Text('wasoeh;i', style: k14w400.copyWith(color: Colors.white)),
-          color: kColorPrimary,
-        ),
+        );
+      },
+    );
+  }
+
+  Widget? _floatingButton() {
+    return GetBuilder<HomeViewModel>(
+      builder: (_) {
+        if (_.bottomNavigation == BottomNavigation.myStore) {
+          return GestureDetector(
+            onTap: () {
+              print('update button !');
+            },
+            child: Container(
+              width: 60.w,
+              height: 60.w,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: kColorPrimary,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    offset: Offset(4, 4),
+                    blurRadius: 3.sp,
+                  ),
+                ],
+              ),
+              child: Icon(
+                Icons.edit,
+                color: Colors.white,
+                size: 24.sp,
+              ),
+            ),
+          );
+        } else {
+          return SizedBox();
+        }
+      },
+    );
+  }
+
+  Widget _bottomNavigationBar() {
+    return Container(
+      alignment: Alignment.center,
+      height: 60.h,
+      decoration: kButtonUnderLine().copyWith(
+          boxShadow: [BoxShadow(color: Colors.black, blurRadius: 1.sp)],
+          color: Colors.white),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _bottomNavigationCard('모든 상점', tag: '모든 상점'),
+          _bottomNavigationCard('나의 상점', tag: '나의 상점'),
+          _bottomNavigationCard('설정', tag: '설정'),
+        ],
       ),
     );
   }
 
-  Widget _fourButton() {
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.only(left: 20.w, right: 20.w),
-          child: Row(
-            children: [
-              _createButton(),
-              SizedBox(width: 20.w),
-              _readButton(),
-            ],
-          ),
-        ),
-        SizedBox(height: 20.h),
-        Padding(
-          padding: EdgeInsets.only(left: 20.w, right: 20.w),
-          child: Row(
-            children: [
-              _updateButton(),
-              SizedBox(width: 20.w),
-              _deleteButton(),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
+  Widget _bottomNavigationCard(String hint, {required String tag}) {
+    return GetBuilder<HomeViewModel>(
+      builder: (_) {
+        var _onTap = () => print('onTap');
+        IconData _iconData = Icons.bookmark;
+        Color _color = Colors.black.withOpacity(0.3);
 
-  Widget _createButton() {
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          Get.to(() => Create());
-        },
-        child: Container(
-          height: 90.h,
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.blue, width: 1.25),
-              borderRadius: BorderRadius.circular(5)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Image.asset(
-              //   'images/HomeSensor.png',
-              //   fit: BoxFit.fill,
-              // ),
-              SizedBox(height: 10.h),
-              Text('Create', style: k16w500)
-            ],
+        switch (tag) {
+          case '모든 상점':
+            _onTap = () => _.setBottomNavigation(BottomNavigation.allStore);
+            _iconData = Icons.bookmarks_rounded;
+            if (_.bottomNavigation == BottomNavigation.allStore) {
+              _color = Colors.black;
+            }
+            break;
+          case '나의 상점':
+            _onTap = () => _.setBottomNavigation(BottomNavigation.myStore);
+            _iconData = Icons.bookmark;
+            if (_.bottomNavigation == BottomNavigation.myStore) {
+              _color = Colors.black;
+            }
+            break;
+          case '설정':
+            _onTap = () {
+              _.setBottomNavigation(BottomNavigation.setting);
+              // Get.to(() => Crud());
+            };
+            _iconData = Icons.settings;
+            if (_.bottomNavigation == BottomNavigation.setting) {
+              _color = Colors.black;
+            }
+            break;
+        }
+        return GestureDetector(
+          onTap: _onTap,
+          child: SizedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(_iconData, color: _color),
+                Text(tag, style: k14w400.copyWith(color: _color)),
+              ],
+            ),
+            width: 70.w,
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _readButton() {
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          Get.to(() => Read());
-        },
-        child: Container(
-          height: 90.h,
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.blue, width: 1.25),
-              borderRadius: BorderRadius.circular(5)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Image.asset(
-              //   'images/HomeGallery.png',
-              //   fit: BoxFit.fill,
-              // ),
-              SizedBox(height: 10.h),
-              Text('Read', style: k16w500)
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _updateButton() {
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          Get.to(() => Update());
-        },
-        child: Container(
-          height: 90.h,
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.blue, width: 1.25),
-              borderRadius: BorderRadius.circular(5)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // SizedBox(
-              //   width: 40.w,
-              //   height: 40.w,
-              //   child: Image.asset(
-              //     'images/HomeMyPage.png',
-              //     fit: BoxFit.fill,
-              //   ),
-              // ),
-              SizedBox(height: 10.h),
-              Text('Update', style: k16w500)
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _deleteButton() {
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          Get.to(() => Delete());
-        },
-        child: Container(
-          height: 90.h,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.blue, width: 1.25),
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // SizedBox(
-              //     width: 40.w,
-              //     height: 40.w,
-              //     child: Image.asset(
-              //       'images/HomeQnA.png',
-              //       fit: BoxFit.fill,
-              //     ),),
-              SizedBox(height: 10.h),
-              Text('Delete', style: k16w500)
-            ],
-          ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

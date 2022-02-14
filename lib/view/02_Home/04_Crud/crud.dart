@@ -7,10 +7,11 @@ import 'package:smile_life/utils/constants/kColor.dart';
 import 'package:smile_life/utils/constants/kFonts.dart';
 import 'package:smile_life/utils/constants/kAlert.dart';
 import 'package:smile_life/utils/constants/kAppBar.dart';
-import 'package:smile_life/view/02_Home/01_Create/01_create.dart';
-import 'package:smile_life/view/02_Home/02_Read/01_read.dart';
-import 'package:smile_life/view/02_Home/03_Update/01_update.dart';
-import 'package:smile_life/view/02_Home/04_Delete/01_delete.dart';
+
+import '01_Create/01_create.dart';
+import '02_Read/01_read.dart';
+import '03_Update/01_update.dart';
+import '04_Delete/01_delete.dart';
 
 class Crud extends StatefulWidget {
   const Crud({Key? key}) : super(key: key);
@@ -32,23 +33,17 @@ class _CrudState extends State<Crud> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        onBackPressed(context);
+        alertBackPressed();
         return Future(() => false);
       },
       child: Scaffold(
-        appBar: kAppBarHome('CRUD'),
+        appBar: kAppBar('CRUD'),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(height: 20.h),
             _fourButton(),
           ],
-        ),
-        bottomNavigationBar: Container(
-          alignment: Alignment.center,
-          height: 50.h,
-          child: Text('waoeh;i', style: k14w400.copyWith(color: Colors.white)),
-          color: kColorPrimary,
         ),
       ),
     );

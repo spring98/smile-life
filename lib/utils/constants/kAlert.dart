@@ -108,15 +108,10 @@ Future<dynamic> alertYesOrNo(String contents) {
       barrierDismissible: false);
 }
 
-void onBackPressed(BuildContext context) {
-  showDialog(
-    barrierDismissible: false,
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        contentPadding: EdgeInsets.all(0),
-        insetPadding: EdgeInsets.all(0),
-        content: SizedBox(
+Future<dynamic> alertBackPressed() {
+  return Get.dialog(
+      Dialog(
+        child: SizedBox(
           height: 155.h,
           width: 300.w,
           child: Column(
@@ -174,7 +169,6 @@ void onBackPressed(BuildContext context) {
             ],
           ),
         ),
-      );
-    },
-  );
+      ),
+      barrierDismissible: false);
 }
