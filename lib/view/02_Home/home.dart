@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
         bottomNavigationBar: Container(
           alignment: Alignment.center,
           height: 50.h,
-          child: Text('waoeh;i', style: k14w400.copyWith(color: Colors.white)),
+          child: Text('wasoeh;i', style: k14w400.copyWith(color: Colors.white)),
           color: kColorPrimary,
         ),
       ),
