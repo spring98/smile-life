@@ -58,6 +58,7 @@ class _MyStoreState extends State<MyStore> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        //
         for (int i = 0; i < count; i++) ...[
           _storeCard(),
         ],
