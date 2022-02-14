@@ -1,6 +1,6 @@
 # smile_life
 
-A new Flutter project.
+smilelife branch : 스마일라이프 프로젝트 작성
 
 ## Getting Started
 
