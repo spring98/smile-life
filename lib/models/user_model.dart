@@ -1,25 +1,34 @@
 class UserModel {
-  final String id;
-  final String name;
-  final String phone;
+  final String account;
   final String division;
-  final String rank;
-  // final String corPicture;
+  final bool isHaveStore;
+  final String name;
+  final String storeExplain;
+  final String storeName;
+  final String userPhoto;
+  final String phoneNumber;
 
-  UserModel(
-      {required this.id,
-      required this.name,
-      required this.phone,
-      required this.division,
-      required this.rank});
+  UserModel({
+    required this.account,
+    required this.division,
+    required this.isHaveStore,
+    required this.name,
+    required this.storeExplain,
+    required this.storeName,
+    required this.userPhoto,
+    required this.phoneNumber,
+  });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
+  factory UserModel.fromJson(Map<dynamic, dynamic> json) {
     return UserModel(
-      id: json['user_id'],
-      name: json['user_name'],
-      phone: json['phone_number'],
+      account: json['account'],
       division: json['division'],
-      rank: json['position'],
+      isHaveStore: json['isHaveStore'],
+      name: json['name'],
+      storeExplain: json['storeExplain'],
+      storeName: json['storeName'],
+      userPhoto: json['userPhoto'],
+      phoneNumber: json['phoneNumber'],
     );
   }
 }

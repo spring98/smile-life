@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
-import 'package:smile_life/core/services/common_service.dart';
-import 'package:smile_life/core/services/login_service.dart';
+import 'package:smile_life/core/services/user/common_service.dart';
+import 'package:smile_life/core/services/user/login_service.dart';
 import 'package:smile_life/utils/login_secure.dart';
 import 'package:smile_life/utils/constants/kAlert.dart';
+import 'package:smile_life/view/02_Home/home.dart';
 
 class LoginViewModel extends GetxController {
   final LoginService _loginService = LoginService();
@@ -52,7 +53,7 @@ class LoginViewModel extends GetxController {
   void idCheck(String id) {
     if (id.length > 3 && id.length < 16) {
       idFlag = true;
-      Session.id = id;
+      Session.phone = id;
     } else {
       idFlag = false;
     }
@@ -85,35 +86,31 @@ class LoginViewModel extends GetxController {
     update();
   }
 
-  void autoLogin(String id, String pw) {
-    _loginService.autoLogin(id, pw).then((value) {
-      if (value == 'fail') {
-        // alert();
-        // alert('자동로그인에 실패하였습니다.');
-      } else {
-        // Get.to(Home());
-        // Get.to(RegionList());
-      }
-      // _loading.value = false;
-      update();
-    });
+  Future<void> autoLogin(String id, String pw) async {
+    String result = await _loginService.autoLogin(id, pw);
+
+    if (result == 'success') {
+      Get.to(() => Home());
+    } else {}
+    update();
   }
 
-  void login() {
-    _loginService.login().then((value) {
-      if (value == 'fail') {
-        alert('로그인 실패');
-      } else {
-        if (autoLoginFlag == true) {
-          setProfileUrl(Session.id + ' ' + Session.pw + ' ' + 'login');
-        }
-        Session.id = '';
-        Session.pw = '';
-        // Get.to(Home());
-        // Get.to(RegionList());
+  Future<void> login() async {
+    alertLoading();
+    String result = await _loginService.login();
+    Get.back();
+
+    if (result == 'success') {
+      if (autoLoginFlag == true) {
+        setProfileUrl(Session.phone + ' ' + Session.pw + ' ' + 'login');
       }
-      // _loading.value = false;
-      update();
-    });
+      // Session.phone = '';
+      // Session.pw = '';
+      Get.to(() => const Home());
+    } else {
+      alert('로그인 실패');
+    }
+
+    update();
   }
 }

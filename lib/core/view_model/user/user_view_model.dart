@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:smile_life/core/services/login_service.dart';
+import 'package:smile_life/core/services/user/login_service.dart';
 import 'package:smile_life/models/user_model.dart';
 
 class UserViewModel extends GetxController {
-  LoginService _loginService = LoginService();
+  final LoginService _loginService = LoginService();
 
   /// fetch data
   List<UserModel> _userModel = [];

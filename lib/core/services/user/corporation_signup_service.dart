@@ -1,21 +1,23 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
-import '../common_service.dart';
+import 'common_service.dart';
 
-class SignupService {
+class CorporationSignupService {
   Future<String> sendSMS(String phone) async {
-    String url = Session.BASEURL + 'send/sms?phone_number=$phone';
+    String url = Session.BASEURL + 'sms/send?phoneNumber=$phone';
     http.Response response = await http.get(
       Uri.parse(Uri.encodeFull(url)),
       headers: Session.headers,
     );
+
     print(jsonDecode(response.body));
     return jsonDecode(response.body)['status'];
   }
 
   Future<String> verifySMS(String phone, String phoneCode) async {
-    String url = Session.BASEURL +
-        'verify/sms?phone_number=$phone&verify_code=$phoneCode';
+    String url =
+        Session.BASEURL + 'sms/verify?phoneNumber=$phone&verifyCode=$phoneCode';
 
     http.Response response = await http.get(
       Uri.parse(Uri.encodeFull(url)),
@@ -25,26 +27,25 @@ class SignupService {
   }
 
   Future<String> checkID(String id) async {
-    String url = Session.BASEURL + 'check/id?user_id=$id';
+    String url = Session.BASEURL + 'check-id?userid=$id';
     http.Response response = await http.get(
       Uri.parse(Uri.encodeFull(url)),
       headers: Session.headers,
     );
-    print(jsonDecode(response.body));
+
     return jsonDecode(response.body)['status'];
   }
 
-  Future<String> signup(String id, String pw, String name, String phone,
-      String division, String position) async {
+  Future<String> signup(
+      String id, String pw, String name, String phone, String division) async {
     String url = Session.BASEURL + 'join';
 
     var data = {
-      'user_id': id,
+      'userid': id,
       'password': pw,
-      'user_name': name,
+      'username': name,
       'division': division,
-      'position': position,
-      'phone_number': phone,
+      'phoneNumber': phone,
     };
     var body = json.encode(data);
 

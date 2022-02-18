@@ -1,5 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:smile_life/core/view_model/login_view_model.dart';
+import 'package:smile_life/core/view_model/user/login_view_model.dart';
 
 final secureStorage = FlutterSecureStorage();
 void setProfileUrl(String loginData) async {

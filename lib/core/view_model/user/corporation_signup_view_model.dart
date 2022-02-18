@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:smile_life/core/services/signup/signup_service.dart';
-import 'package:smile_life/view/01_Login/login.dart';
+import 'package:smile_life/core/services/user/corporation_signup_service.dart';
 import 'package:smile_life/utils/constants/kAlert.dart';
 
-class SignupViewModel extends GetxController {
+class CorporationSignupViewModel extends GetxController {
   /// Signup Service
-  final SignupService _signupService = SignupService();
+  final CorporationSignupService _corporationSignupService =
+      CorporationSignupService();
 
   /// 자리수 확인하는 임시 플래그
   bool idTempFlag = false;
@@ -19,21 +19,19 @@ class SignupViewModel extends GetxController {
   bool pwFlag = false;
   bool pwConfirmFlag = false;
   bool nameFlag = false;
-  bool divisionFlag = false;
-  bool rankFlag = false;
+  bool pictureFlag = false;
   bool codeFlag = false;
   bool finalFlag = false;
 
   bool sendSMSFlag = false;
 
   /// 회원가입 멤버필드
-  bool isPersonalSignup = true;
+
   String id = '';
   String pw = '';
   String name = '';
   String phone = '';
-  String division = '';
-  String rank = '';
+  String picture = '';
   String phoneCode = '';
 
   /// 자리수 체크 메소드
@@ -91,27 +89,14 @@ class SignupViewModel extends GetxController {
     update();
   }
 
-  void divisionCheck(String division) {
-    if (division.isNotEmpty) {
-      divisionFlag = true;
+  void pictureCheck(String picture) {
+    if (picture.isNotEmpty) {
+      pictureFlag = true;
 
       // 정상값 멤버필드에 저장
-      this.division = division;
+      this.picture = picture;
     } else {
-      divisionFlag = false;
-    }
-    finalCheck();
-    update();
-  }
-
-  void rankCheck(String rank) {
-    if (rank.isNotEmpty) {
-      rankFlag = true;
-
-      // 정상값 멤버필드에 저장
-      this.rank = rank;
-    } else {
-      rankFlag = false;
+      pictureFlag = false;
     }
     finalCheck();
     update();
@@ -145,7 +130,7 @@ class SignupViewModel extends GetxController {
 
   /// 아이디 중복 검사 메소드
   Future<void> idCheck() async {
-    String result = await _signupService.checkID(id);
+    String result = await _corporationSignupService.checkID(id);
     if (result == 'success') {
       idFlag = true;
       alert('사용가능한 아이디입니다.');
@@ -159,7 +144,7 @@ class SignupViewModel extends GetxController {
 
   /// 전화번호 인증코드 발송 메소드
   Future<void> sendSMS() async {
-    String result = await _signupService.sendSMS(phone);
+    String result = await _corporationSignupService.sendSMS(phone);
     if (result == 'success') {
       sendSMSFlag = true;
       alert('인증코드를 발송했습니다.');
@@ -173,7 +158,7 @@ class SignupViewModel extends GetxController {
 
   /// 전화번호 인증코드 검증 메소드
   Future<void> verifySMS() async {
-    String result = await _signupService.verifySMS(phone, phoneCode);
+    String result = await _corporationSignupService.verifySMS(phone, phoneCode);
     if (result == 'success') {
       codeFlag = true;
       alert('휴대폰 인증에 성공하였습니다.');
@@ -186,45 +171,18 @@ class SignupViewModel extends GetxController {
     update();
   }
 
-  /// 전화번호 인증코드 검증 메소드
-  Future<void> signup() async {
-    String result =
-        await _signupService.signup(id, pw, name, phone, division, rank);
-    if (result == 'success') {
-      String alertResponse = await alert('회원가입에 성공하였습니다.');
-      if (alertResponse == 'yes') {
-        Get.offAll(Login());
-      }
-    } else {
-      alert('회원가입에 실패하였습니다.');
-    }
-    update();
-  }
-
   /// 최종 플래그 확인 메소드
   void finalCheck() {
     if (idFlag &&
         pwFlag &&
         pwConfirmFlag &&
         nameFlag &&
-        divisionFlag &&
-        rankFlag &&
+        pictureFlag &&
         codeFlag) {
       finalFlag = true;
     } else {
       finalFlag = false;
     }
-    update();
-  }
-
-  /// 개인가입인지 법인가입인지 구분
-  void setPersonal() {
-    isPersonalSignup = true;
-    update();
-  }
-
-  void setCorporation() {
-    isPersonalSignup = false;
     update();
   }
 }

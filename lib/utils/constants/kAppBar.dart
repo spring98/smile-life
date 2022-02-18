@@ -34,7 +34,7 @@ PreferredSizeWidget kAppBar(String title) {
     bottom: PreferredSize(
       child: Container(
         color: Colors.blue,
-        height: 1.5.h,
+        height: 0.5.h,
       ),
       preferredSize: Size.fromHeight(1.5.h),
     ),
@@ -87,7 +87,7 @@ PreferredSizeWidget kAppBarHome(String title) {
     bottom: PreferredSize(
       child: Container(
         color: Colors.blue,
-        height: 1.5.h,
+        height: 0.5.h,
       ),
       preferredSize: Size.fromHeight(1.5.h),
     ),
@@ -113,7 +113,7 @@ PreferredSizeWidget kAppBarNoBack(String title) {
     bottom: PreferredSize(
       child: Container(
         color: Colors.blue,
-        height: 1.5.h,
+        height: 0.5.h,
       ),
       preferredSize: Size.fromHeight(1.5.h),
     ),

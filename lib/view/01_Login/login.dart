@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, avoid_print
 import 'package:flutter/material.dart';
-import 'package:smile_life/core/view_model/login_view_model.dart';
+import 'package:smile_life/core/view_model/user/login_view_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:smile_life/utils/constants/kAlert.dart';
@@ -35,7 +35,7 @@ class _LoginState extends State<Login> {
                   SizedBox(height: 60.h),
                   _title(),
                   SizedBox(height: 10.h + _.flex),
-                  _textField(tag: '아이디', hint: '아이디(이메일)'),
+                  _textField(tag: '아이디', hint: '전화번호'),
                   SizedBox(height: 13.h),
                   _textField(tag: '비밀번호', hint: '비밀번호'),
                   SizedBox(height: 5.5.h),
@@ -80,6 +80,8 @@ class _LoginState extends State<Login> {
         var _onTap = () => print('onTap');
         var _onFieldSubmitted = (String str) => print('onFieldSubmitted');
         var _controller = _.idController;
+        var _keyboardType = TextInputType.number;
+        var _isObscure = false;
 
         switch (tag) {
           case '아이디':
@@ -87,12 +89,16 @@ class _LoginState extends State<Login> {
             _onTap = () => _.setFlex(0);
             _onFieldSubmitted = (String str) => _.setFlex(40);
             _controller = _.idController;
+            _keyboardType = TextInputType.number;
+            _isObscure = false;
             break;
           case '비밀번호':
             _onChanged = (text) => _.pwCheck(text);
             _onTap = () => _.setFlex(0);
             _onFieldSubmitted = (String str) => _.setFlex(40);
             _controller = _.pwController;
+            _keyboardType = TextInputType.text;
+            _isObscure = true;
             break;
         }
 
@@ -100,10 +106,12 @@ class _LoginState extends State<Login> {
           padding: EdgeInsets.only(left: 20.w, right: 20.w),
           child: TextFormField(
             onChanged: _onChanged,
+            keyboardType: _keyboardType,
             onTap: _onTap,
+            obscureText: _isObscure,
             onFieldSubmitted: _onFieldSubmitted,
             controller: _controller,
-            cursorHeight: 16.h,
+            // cursorHeight: 16.h,
             cursorColor: kColorPrimary,
             style: k14w400.copyWith(color: kColorPrimary),
             decoration: kTextFieldRound(hint),
@@ -140,23 +148,20 @@ class _LoginState extends State<Login> {
     );
   }
 
-  /// getbuilder, dependancy
-
   Widget _button({required String tag, required String hint}) {
     return GetBuilder<LoginViewModel>(
       builder: (_) {
-        var _onTap = () => print('initial');
+        var _onTap = () => print('onTap');
 
         Color _color = Colors.black;
         BoxDecoration _decoration = kButtonRound();
 
         switch (tag) {
           case '로그인':
-            // _.login();
-            // _onTap = () async {
-            //   if (_.finalFlag) Get.to(() => Home());
-            // };
-            _onTap = () async => Get.to(() => Home());
+            _onTap = () async {
+              if (_.finalFlag) _.login();
+            };
+            // _onTap = () async => Get.to(() => Home());
             _color = _.finalFlag ? Colors.white : kColorHint;
             _decoration = kButtonRound().copyWith(color: kColorPrimary);
             break;

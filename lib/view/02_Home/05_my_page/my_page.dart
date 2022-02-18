@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smile_life/core/services/common_service.dart';
-import 'package:smile_life/core/view_model/user_view_model.dart';
+import 'package:smile_life/core/services/user/common_service.dart';
+import 'package:smile_life/core/view_model/user/user_view_model.dart';
 import 'package:smile_life/models/user_model.dart';
 import 'package:smile_life/utils/constants/kFonts.dart';
 import 'package:smile_life/utils/login_secure.dart';
@@ -59,12 +59,12 @@ class _MyPageState extends State<MyPage> {
             height: 70.w,
             child: Image.asset('images/MyPageUserCircle.png'),
           ),
-          Text(_.getUserModel[0].name,
-              style: k20w700.copyWith(color: Color(0xFF3F3F3F))),
-          Text(_.getUserModel[0].id,
-              style: k14w500.copyWith(color: Color(0xFF3F3F3F))),
-          Text(_.getUserModel[0].division,
-              style: k12w400.copyWith(color: Color(0xFF3F3F3F))),
+          // Text(_.getUserModel[0].name,
+          //     style: k20w700.copyWith(color: Color(0xFF3F3F3F))),
+          // Text(_.getUserModel[0].id,
+          //     style: k14w500.copyWith(color: Color(0xFF3F3F3F))),
+          // Text(_.getUserModel[0].division,
+          //     style: k12w400.copyWith(color: Color(0xFF3F3F3F))),
         ],
       ),
     );
@@ -133,7 +133,7 @@ class _MyPageState extends State<MyPage> {
         GestureDetector(
           onTap: () {
             print('로그아웃');
-            setProfileUrl(Session.id + ' ' + Session.pw + ' ' + 'login');
+            setProfileUrl(Session.phone + ' ' + Session.pw + ' ' + 'login');
             Get.offAll(Login());
           },
           child: Column(

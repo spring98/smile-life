@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:smile_life/core/view_model/corporation_signup_view_model.dart';
+import 'package:smile_life/core/view_model/user/corporation_signup_view_model.dart';
 import 'package:smile_life/utils/constants/kButton.dart';
 import 'package:smile_life/utils/constants/kColor.dart';
 import 'package:smile_life/utils/constants/kFonts.dart';
@@ -181,7 +181,7 @@ class _CorporationSignupState extends State<CorporationSignup> {
         var _onTap = () => print('onTap');
         Color _color = kColorHint;
         if (_.finalFlag) {
-          // _onTap = () async => _.signup();
+          // _onTap = () async => _.user();
           _color = kColorPrimary;
         }
         return GestureDetector(
@@ -397,7 +397,7 @@ class _CorporationSignupState extends State<CorporationSignup> {
   //                         style: k14w500.copyWith(color: Colors.white)),
   //                     onPressed: () async {
   //                       // Session session = Session();
-  //                       // String result = await session.signup();
+  //                       // String result = await session.user();
   //                       // if (result == 'success') {
   //                       //   alert(context, '회원가입이 완료되었습니다.');
   //                       // } else {
