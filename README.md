@@ -1,6 +1,6 @@
-# smile_life
+# Strart Unit Code 
 
-smilelife branch : 스마일라이프 프로젝트 작성
+프로젝트 시작할때 시작코드로 사용하자
 
 ## Getting Started
 
