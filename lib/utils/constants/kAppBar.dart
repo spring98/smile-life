@@ -33,10 +33,10 @@ PreferredSizeWidget kAppBar(String title) {
     ),
     bottom: PreferredSize(
       child: Container(
-        color: Colors.blue,
+        color: Colors.black.withOpacity(0.3),
         height: 0.5.h,
       ),
-      preferredSize: Size.fromHeight(1.5.h),
+      preferredSize: Size.fromHeight(0.h),
     ),
     elevation: 0.0,
   );
@@ -48,7 +48,6 @@ PreferredSizeWidget kAppBarHome(String title) {
     automaticallyImplyLeading: false,
     title: Stack(
       children: [
-        // Image.asset('images/HomeSunghaLogo.png'),
         Align(
           alignment: Alignment.center,
           child: Text(
@@ -86,10 +85,10 @@ PreferredSizeWidget kAppBarHome(String title) {
     ),
     bottom: PreferredSize(
       child: Container(
-        color: Colors.blue,
+        color: Colors.black.withOpacity(0.3),
         height: 0.5.h,
       ),
-      preferredSize: Size.fromHeight(1.5.h),
+      preferredSize: Size.fromHeight(0.h),
     ),
     elevation: 0.0,
   );

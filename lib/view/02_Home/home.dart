@@ -11,7 +11,7 @@ import 'package:smile_life/utils/constants/kFonts.dart';
 import 'package:smile_life/utils/constants/kAlert.dart';
 import 'package:smile_life/utils/constants/kAppBar.dart';
 import 'package:smile_life/utils/enum/home_enum.dart';
-import 'package:smile_life/view/02_Home/01_all_store/all_store.dart';
+import 'package:smile_life/view/02_Home/01_all_store/01_all_store.dart';
 import 'package:smile_life/view/02_Home/02_my_store/my_store.dart';
 import 'package:smile_life/view/02_Home/04_Crud/crud.dart';
 
@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
         return Future(() => false);
       },
       child: Scaffold(
-        appBar: kAppBarHome('Home'),
+        appBar: kAppBarHome('Smile Life'),
         body: RefreshIndicator(
           onRefresh: () => Future(() {
             setState(() {
@@ -149,6 +149,7 @@ class _HomeState extends State<Home> {
       () {
         var _onTap = () => print('onTap');
         IconData _iconData = Icons.bookmark;
+        String _assetImageUrl = 'images/shop.png';
         Color _color = Colors.black.withOpacity(0.3);
 
         switch (tag) {
@@ -156,12 +157,14 @@ class _HomeState extends State<Home> {
             _onTap =
                 () => homeVM.setBottomNavigation(BottomNavigation.allStore);
             _iconData = Icons.bookmarks_rounded;
+            _assetImageUrl = 'images/shop.png';
             if (homeVM.bottomNavigation.value == BottomNavigation.allStore) {
               _color = Colors.black;
             }
             break;
           case '나의 상점':
             _onTap = () => homeVM.setBottomNavigation(BottomNavigation.myStore);
+            _assetImageUrl = 'images/profile.png';
             _iconData = Icons.bookmark;
             if (homeVM.bottomNavigation.value == BottomNavigation.myStore) {
               _color = Colors.black;
@@ -170,9 +173,10 @@ class _HomeState extends State<Home> {
           case '설정':
             _onTap = () {
               homeVM.setBottomNavigation(BottomNavigation.setting);
-              Get.to(() => Crud());
+              // Get.to(() => Crud());
             };
             _iconData = Icons.settings;
+            _assetImageUrl = 'images/setting.png';
             if (homeVM.bottomNavigation.value == BottomNavigation.setting) {
               _color = Colors.black;
             }
@@ -184,8 +188,17 @@ class _HomeState extends State<Home> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(_iconData, color: _color),
-                Text(tag, style: k14w400.copyWith(color: _color)),
+                // Icon(_iconData, color: _color),
+                SizedBox(
+                  width: 25.w,
+                  height: 25.w,
+                  child: Image.asset(
+                    _assetImageUrl,
+                    color: _color,
+                  ),
+                ),
+                SizedBox(height: 5.w),
+                Text(tag, style: k14w400Bazzi.copyWith(color: _color)),
               ],
             ),
             width: 70.w,

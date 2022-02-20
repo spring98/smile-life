@@ -102,6 +102,7 @@ class MyStoreService {
       print('**');
       print(Session.phone);
       print(id);
+      await _imageStorage.ref('${Session.phone}/${id.toString()}.png').delete();
       await _imageStorage
           .ref('${Session.phone}/${id.toString()}.png')
           .putFile(File(url));
@@ -121,7 +122,8 @@ class MyStoreService {
   }
 
   Future<void> deleteProduct({required String id}) async {
-    _myStoreRef.child(Session.phone).child('product').child(id).remove();
+    await _myStoreRef.child(Session.phone).child('product').child(id).remove();
+    await _imageStorage.ref('${Session.phone}/${id.toString()}.png').delete();
   }
 
   Future<dynamic> fetchMyStore() async {

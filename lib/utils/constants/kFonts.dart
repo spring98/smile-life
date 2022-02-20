@@ -59,6 +59,14 @@ final k14w400 = TextStyle(
   fontFamily: 'NotoSansKR',
 );
 
+final k14w400Bazzi = TextStyle(
+  fontSize: (14 * zoomFactor).sp,
+  fontWeight: FontWeight.w400,
+  fontStyle: FontStyle.normal,
+  color: Colors.black,
+  fontFamily: 'BazziKR',
+);
+
 final k18w400 = TextStyle(
   fontSize: (18 * zoomFactor).sp,
   fontWeight: FontWeight.w400,
@@ -102,6 +110,14 @@ final k12w500 = TextStyle(
 final k14w500 = TextStyle(
   fontSize: (14 * zoomFactor).sp,
   fontWeight: FontWeight.w500,
+  fontStyle: FontStyle.normal,
+  color: Colors.black,
+  fontFamily: 'NotoSansKR',
+);
+
+final k16w400 = TextStyle(
+  fontSize: (16 * zoomFactor).sp,
+  fontWeight: FontWeight.w400,
   fontStyle: FontStyle.normal,
   color: Colors.black,
   fontFamily: 'NotoSansKR',

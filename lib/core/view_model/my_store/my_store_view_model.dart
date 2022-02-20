@@ -1,9 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'dart:math';
-
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smile_life/core/services/my_store/my_store_service.dart';
 import 'package:smile_life/models/product_model.dart';
@@ -178,7 +175,9 @@ class MyStoreViewModel extends GetxController {
     if (deleteResult == 'yes') {
       // 삭제하기 눌렀을 때
       if (await alertYesOrNo('정말로 삭제하시겠습니까?') == 'yes') {
+        alertLoading();
         await _myStoreService.deleteProduct(id: id);
+        Get.back();
         alert('성공적으로 삭제되었습니다.');
       }
     } else if (deleteResult == 'no') {

@@ -7,7 +7,7 @@ import 'package:smile_life/utils/constants/kButton.dart';
 import 'package:smile_life/utils/constants/kColor.dart';
 import 'package:smile_life/utils/constants/kFonts.dart';
 import 'package:smile_life/utils/constants/kProgressIndicator.dart';
-import 'package:smile_life/view/02_Home/01_all_store/all_store_detail.dart';
+import 'package:smile_life/view/02_Home/01_all_store/02_all_store_detail.dart';
 
 class AllStore extends StatefulWidget {
   const AllStore({Key? key}) : super(key: key);
@@ -17,8 +17,6 @@ class AllStore extends StatefulWidget {
 }
 
 class _AllStoreState extends State<AllStore> {
-  int count = 10;
-
   final allStoreVM = Get.put(AllStoreViewModel());
 
   @override
@@ -66,6 +64,7 @@ class _AllStoreState extends State<AllStore> {
         padding:
             EdgeInsets.only(top: 10.h, bottom: 10.h, left: 15.w, right: 15.w),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               width: 100.w,
@@ -80,14 +79,15 @@ class _AllStoreState extends State<AllStore> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('상점이름 : ${allStoreVM.getUserModel[index].storeName}',
-                    style: k14w400.copyWith(color: Colors.red)),
+                Text(allStoreVM.getUserModel[index].storeName, style: k16w400),
                 SizedBox(height: 5.h),
-                Text('판매자 : ${allStoreVM.getUserModel[index].name}',
-                    style: k14w400),
+                Text(allStoreVM.getUserModel[index].name,
+                    style:
+                        k14w400.copyWith(color: Colors.black.withOpacity(0.8))),
                 SizedBox(height: 5.h),
-                Text('소속 : ${allStoreVM.getUserModel[index].division}',
-                    style: k14w400),
+                Text(allStoreVM.getUserModel[index].division,
+                    style:
+                        k14w400.copyWith(color: Colors.black.withOpacity(0.8))),
               ],
             )
           ],

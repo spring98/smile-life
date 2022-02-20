@@ -5,6 +5,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:smile_life/core/services/user/common_service.dart';
 import 'package:smile_life/core/view_model/all_store/all_store_view_model.dart';
 import 'package:smile_life/core/view_model/home/home_view_model.dart';
@@ -15,6 +17,7 @@ import 'package:smile_life/utils/constants/kAppBar.dart';
 import 'package:smile_life/utils/constants/kButton.dart';
 import 'package:smile_life/utils/constants/kFonts.dart';
 import 'package:smile_life/utils/constants/kProgressIndicator.dart';
+import 'package:smile_life/view/02_Home/01_all_store/03_picture_list.dart';
 
 class AllStoreDetail extends StatefulWidget {
   const AllStoreDetail({Key? key, required this.phone}) : super(key: key);
@@ -61,7 +64,7 @@ class _AllStoreDetailState extends State<AllStoreDetail> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('상점 설명 : ${allStoreVM.getUserDetailModel[0].storeExplain}',
-              style: k14w400.copyWith(color: Colors.red)),
+              style: k14w400),
           SizedBox(height: 5.h),
           Text('전화번호 : ${allStoreVM.getUserDetailModel[0].phoneNumber}',
               style: k14w400),
@@ -162,35 +165,54 @@ class _AllStoreDetailState extends State<AllStoreDetail> {
   }
 
   Widget _productCompleteCard(int categoryIndex, int productIndex) {
+    // print('categoryIndex : $categoryIndex');
+    // print('productIndex : $productIndex');
     double dynamicSize = 200.w;
-    return Container(
-      decoration: BoxDecoration(
-        border: Border(
-          right: BorderSide(color: Colors.black.withOpacity(0.1), width: 1),
-        ),
-      ),
-      margin: EdgeInsets.only(left: 15.w),
-      padding: EdgeInsets.only(right: 15.w),
-      width: dynamicSize,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: dynamicSize,
-            width: dynamicSize,
-            child: CachedNetworkImage(
-              imageUrl: allStoreVM
-                  .getCategoryModelList[categoryIndex][productIndex].url,
-              placeholder: (context, url) => CircularProgressIndicator(),
-              fit: BoxFit.fill,
-            ),
+    return GestureDetector(
+      onTap: () {
+        print('categoryIndex : $categoryIndex');
+        print('productIndex : $productIndex');
+
+        /// Photo view 적용 한 클래스
+        Get.to(
+            () => PictureList(
+                categoryIndex: categoryIndex, productIndex: productIndex),
+            transition: Transition.noTransition);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            right: BorderSide(color: Colors.black.withOpacity(0.1), width: 1),
           ),
-          SizedBox(height: 10.h),
-          Text(allStoreVM
-              .getCategoryModelList[categoryIndex][productIndex].name),
-          Text(allStoreVM
-              .getCategoryModelList[categoryIndex][productIndex].explain)
-        ],
+        ),
+        margin: EdgeInsets.only(left: 15.w),
+        padding: EdgeInsets.only(right: 15.w),
+        width: dynamicSize,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: dynamicSize,
+              width: dynamicSize,
+              child: CachedNetworkImage(
+                imageUrl: allStoreVM
+                    .getCategoryModelList[categoryIndex][productIndex].url,
+                placeholder: (context, url) => Container(
+                    // margin: EdgeInsets.only(
+                    //     left: 80.w, right: 80.w, top: 80.h, bottom: 80.h),
+                    // width: 30.w,
+                    // height: 30.w,
+                    child: CircularProgressIndicator()),
+                fit: BoxFit.fill,
+              ),
+            ),
+            SizedBox(height: 10.h),
+            Text(allStoreVM
+                .getCategoryModelList[categoryIndex][productIndex].name),
+            Text(allStoreVM
+                .getCategoryModelList[categoryIndex][productIndex].explain)
+          ],
+        ),
       ),
     );
   }
