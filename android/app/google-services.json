@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "544041119314",
+    "project_id": "smilelife-4d262",
+    "storage_bucket": "smilelife-4d262.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544041119314:android:ce97603d899c595905398b",
+        "android_client_info": {
+          "package_name": "com.spring.smilelife"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "544041119314-j4qlj5jovcod68nnou1ujmejlcr1a55k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgJNg4zO5yZcFbAwwnYEv_QtEDQ4UUudE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "544041119314-j4qlj5jovcod68nnou1ujmejlcr1a55k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
